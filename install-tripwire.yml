@@ -1,6 +1,7 @@
 ---
 - name: Install tripwire on enterprise linux
   hosts: Greg-rocky9
+  gather_facts: false
   become: yes
   vars:
     # The following should be supplied at run time securely
