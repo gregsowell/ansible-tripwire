@@ -1,6 +1,6 @@
 ---
 - name: Install tripwire on enterprise linux
-  hosts: all
+  hosts: Greg-rocky9
   become: yes
   vars:
     # The following should be supplied at run time securely
