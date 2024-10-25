@@ -19,6 +19,15 @@
         name: tripwire
         state: present
 
+    - name: Install the tripwire site key from the contents of the site_key variable
+      ansible.builtin.copy:
+        content: "{{ site_key }}"
+        dest: /etc/tripwire/site.key
+        owner: root
+        group: root
+        mode: 0600
+        no_log: true
+
     - name: Generate the local key based on hostname
       # ansible.builtin.shell: /usr/sbin/tripwire --init -P local.key -L /var/lib/tripwire/$(hostname)-local.key -Q $(echo "{{ local_key_password }}" | sha256sum | awk '{print $1}')
       ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/${HOSTNAME}-local.key -Q {{ local_key_password }}"
