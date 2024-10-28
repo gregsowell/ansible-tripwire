@@ -31,4 +31,5 @@
 
     - name: Generate the local key based on hostname
       # ansible.builtin.shell: /usr/sbin/tripwire --init -P local.key -L /var/lib/tripwire/$(hostname)-local.key -Q $(echo "{{ local_key_password }}" | sha256sum | awk '{print $1}')
-      ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/${HOSTNAME}-local.key -Q {{ local_key_password }}"
+      # ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/${HOSTNAME}-local.key -Q {{ local_key_password }}"
+      ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/{{ inventory_hostname }}-local.key -Q {{ local_key_password }}"
