@@ -84,4 +84,4 @@
         command: tripwire --init
         responses:
           Please enter your local passphrase: "{{ local_key_password }}"
-      timeout: 300
+        timeout: 300
