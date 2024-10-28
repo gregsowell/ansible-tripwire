@@ -94,7 +94,7 @@
     - name: Extract the file path from command output
       set_fact:
         # report_file_path: "{{ tripwire_check | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
-        report_file_path: "{{ command_output.split('\n') | select('search', 'Wrote report file:') | first | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
+        report_file_path: "{{ tripwire_check.stdout.split('\n') | select('search', 'Wrote report file:') | first | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
 
 # tripwire --update --accept-all -r /var/lib/tripwire/report/Greg-rocky9-20241025-162340.twr
 # Please enter your local passphrase
