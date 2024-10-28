@@ -54,6 +54,13 @@
           Enter the local keyfile passphrase: "{{ local_key_password }}"
           Verify the local keyfile passphrase: "{{ local_key_password }}"
 
+    - name: Use expect to generate site key
+      ansible.builtin.expect:
+        command: twadmin --generate-keys -S /etc/tripwire/site.key
+        responses:
+          Enter the site keyfile passphrase: "{{ site_key_password }}"
+          Verify the site keyfile passphrase: "{{ site_key_password }}"
+
     - name: Change MAILNOVIOLATIONS to false in /etc/tripwire/twcfg.txt
       ansible.builtin.lineinfile:
         path: /etc/tripwire/twcfg.txt
