@@ -48,6 +48,7 @@
         executable: /usr/bin/pip3
       delegate_to: localhost
       run_once: true
+      become: false
 
     - name: Use expect to generate local key based on hostname
       ansible.builtin.expect:
