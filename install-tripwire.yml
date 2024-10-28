@@ -45,7 +45,7 @@
     - name: Install a Python package in the current EE
       ansible.builtin.pip:
         name: pexpect
-        executable: /usr/bin/pip3
+        # executable: /usr/bin/pip3
       delegate_to: localhost
       run_once: true
       become: false
