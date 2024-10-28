@@ -37,19 +37,19 @@
 # Enter the local keyfile passphrase:
 # Verify the local keyfile passphrase:
 
-    - name: Install pexpect
-      ansible.builtin.command: pip3 install pexpect
-      delegate_to: localhost
-      run_once: true
-      become: false
-
-    # - name: Install a Python package in the current EE
-    #   ansible.builtin.pip:
-    #     name: pexpect
-    #     # executable: /usr/bin/pip3
+    # - name: Install pexpect
+    #   ansible.builtin.command: pip3 install pexpect
     #   delegate_to: localhost
     #   run_once: true
     #   become: false
+
+    - name: Install a Python package in the current EE
+      ansible.builtin.pip:
+        name: pexpect
+        # executable: /usr/bin/pip3
+      # delegate_to: localhost
+      # run_once: true
+      # become: false
 
     - name: Use expect to generate local key based on hostname
       ansible.builtin.expect:
