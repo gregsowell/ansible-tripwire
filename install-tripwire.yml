@@ -43,13 +43,9 @@
     #   run_once: true
     #   become: false
 
-    - name: Install a Python package in the current EE
+    - name: Install pexpect Python package on the remote host
       ansible.builtin.pip:
         name: pexpect
-        # executable: /usr/bin/pip3
-      # delegate_to: localhost
-      # run_once: true
-      # become: false
 
     - name: Use expect to generate local key based on hostname
       ansible.builtin.expect:
@@ -57,3 +53,9 @@
         responses:
           Enter the local keyfile passphrase: "{{ local_key_password }}"
           Verify the local keyfile passphrase: "{{ local_key_password }}"
+
+    - name: Change MAILNOVIOLATIONS to false in /etc/tripwire/twcfg.txt
+      ansible.builtin.lineinfile:
+        path: /etc/tripwire/twcfg.txt
+        regexp: '^MAILNOVIOLATIONS\s*=\s*true'
+        line: 'MAILNOVIOLATIONS       =false'
