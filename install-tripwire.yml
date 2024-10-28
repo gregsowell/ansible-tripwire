@@ -78,3 +78,9 @@
         command: twadmin --create-polfile -S /etc/tripwire/site.key /etc/tripwire/twpol.txt
         responses:
           Please enter your site passphrase: "{{ site_key_password }}"
+
+    - name: Use expect to run tripwire init
+      ansible.builtin.expect:
+        command: tripwire --init
+        responses:
+          Please enter your local passphrase: "{{ local_key_password }}"
