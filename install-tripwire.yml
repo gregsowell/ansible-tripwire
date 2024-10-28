@@ -92,4 +92,17 @@
 
     - name: Extract the file path from command output
       set_fact:
-        report_file_path: "{{ tripwire_check | regex_search('Wrote report file: (\/.*\.twr)', '\\1') }}"
+        report_file_path: "{{ tripwire_check | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
+
+# tripwire --update --accept-all -r /var/lib/tripwire/report/Greg-rocky9-20241025-162340.twr
+# Please enter your local passphrase
+    # - name: Run the tripwire database --update
+    #   ansible.builtin.command: tripwire --update --accept-all -r "{{ report_file_path }}"
+    #   register: tripwire_update
+
+    - name: Use expect to run the tripwire database --update
+      ansible.builtin.expect:
+        command: tripwire --update --accept-all -r "{{ report_file_path }}"
+        responses:
+          Please enter your local passphrase: "{{ local_key_password }}"
+        timeout: 300
