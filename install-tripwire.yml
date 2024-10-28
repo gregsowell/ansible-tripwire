@@ -36,6 +36,12 @@
 
 # Enter the local keyfile passphrase:
 # Verify the local keyfile passphrase:
+
+    - name: Install pexpect
+      ansible.builtin.command: pip install pexpect
+      delegate_to: localhost
+      run_once: true
+
     - name: Use expect to generate local key based on hostname
       ansible.builtin.expect:
         command: twadmin --generate-keys -L /etc/tripwire/{{ inventory_hostname }}-local.key
