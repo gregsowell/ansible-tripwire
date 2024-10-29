@@ -1,0 +1,16 @@
+---
+- name: Update tripwire database and accept all changes
+  hosts: Greg-rocky9
+  gather_facts: false
+  become: yes
+  vars:
+    install_tasks:
+      - run-check.yml
+      - database-update-accept-all.yml
+
+  tasks:
+    - name: Use the tripwire role to runch a check and accept all into the database
+      include_role:
+        name: tripwire
+        tasks_from: "{{ item }}"
+      loop: "{{ install_tasks }}"
