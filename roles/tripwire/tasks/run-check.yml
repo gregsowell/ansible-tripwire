@@ -1,0 +1,5 @@
+---
+- name: Run a tripwire check
+  ansible.builtin.command: tripwire --check
+  register: tripwire_check
+  failed_when: '"Integrity check complete." not in tripwire_check.stdout'

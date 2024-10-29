@@ -1,0 +1,14 @@
+---
+- name: Install epel-release
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
+- name: Install tripwire
+  ansible.builtin.dnf:
+    name: tripwire
+    state: latest
+
+- name: Install pexpect Python package on the remote host
+  ansible.builtin.pip:
+    name: pexpect

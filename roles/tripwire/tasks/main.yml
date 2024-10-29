@@ -1,0 +1,49 @@
+---
+- name: Install/update tripwire
+  include_tasks: install-update.yml
+  tags:
+    - install
+    - update
+    - full-install
+
+- name: Create local key
+  include_tasks: create-local-key.yml
+  tags:
+    - create-local-key
+    - full-install
+
+- name: Create site key
+  include_tasks: create-site-key.yml
+  tags:
+    - create-site-key
+    - full-install
+
+- name: Generate config file
+  include_tasks: generate-config-file.yml
+  tags:
+    - generate-config-file
+    - full-install
+
+- name: Generate policy file
+  include_tasks: generate-policy-file.yml
+  tags:
+    - generate-policy-file
+    - full-install
+
+- name: Initialize tripwire database
+  include_tasks: init-database.yml
+  tags:
+    - init
+    - full-install
+
+- name: Run tripwire check
+  include_tasks: run-check.yml
+  tags:
+    - check
+    - full-install
+
+- name: Database update accept all
+  include_tasks: database-update-accept-all.yml
+  tags:
+    - database-accept-all
+    - full-install

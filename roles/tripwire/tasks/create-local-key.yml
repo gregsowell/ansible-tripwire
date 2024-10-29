@@ -1,0 +1,7 @@
+---
+- name: Use expect to generate local key based on hostname
+  ansible.builtin.expect:
+    command: twadmin --generate-keys -L /etc/tripwire/{{ inventory_hostname }}-local.key
+    responses:
+      Enter the local keyfile passphrase: "{{ local_key_password }}"
+      Verify the local keyfile passphrase: "{{ local_key_password }}"

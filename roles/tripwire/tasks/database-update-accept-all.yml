@@ -1,0 +1,12 @@
+---
+- name: Extract the file path from command output
+  set_fact:
+    # report_file_path: "{{ tripwire_check | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
+    report_file_path: "{{ tripwire_check.stdout.split('\n') | select('search', 'Wrote report file:') | first | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
+
+- name: Use expect to run the tripwire database --update
+  ansible.builtin.expect:
+    command: tripwire --update --accept-all -r "{{ report_file_path[0] }}"
+    responses:
+      Please enter your local passphrase: "{{ local_key_password }}"
+    timeout: 300

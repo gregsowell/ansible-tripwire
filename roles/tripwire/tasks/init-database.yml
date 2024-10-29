@@ -1,0 +1,7 @@
+---
+- name: Use expect to run tripwire init
+  ansible.builtin.expect:
+    command: tripwire --init
+    responses:
+      Please enter your local passphrase: "{{ local_key_password }}"
+    timeout: 300

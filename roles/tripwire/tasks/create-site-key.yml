@@ -1,0 +1,7 @@
+---
+- name: Use expect to generate site key
+  ansible.builtin.expect:
+    command: twadmin --generate-keys -S /etc/tripwire/site.key
+    responses:
+      Enter the site keyfile passphrase: "{{ site_key_password }}"
+      Verify the site keyfile passphrase: "{{ site_key_password }}"
