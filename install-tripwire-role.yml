@@ -4,6 +4,16 @@
   gather_facts: false
   become: yes
   vars:
+    install_tasks:
+      - install-update.yml
+      - create-local-key.yml
+      - create-site-key.yml
+      - generate-config-file.yml
+      - generate-policy-file.yml
+      - init-database.yml
+      - run-check.yml
+      - database-update-accept-all.yml
+
     # The following should be supplied at run time securely
     site_key: Site key contents
     site_key_password: Password for site key
@@ -13,5 +23,5 @@
     - name: Use the tripwire role to install tripwire
       include_role:
         name: tripwire
-      tags:
-        - full-install
+        tasks_from: "{{ item }}"
+      loop: "{{ install_tasks }}"
