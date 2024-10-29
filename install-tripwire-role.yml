@@ -13,6 +13,8 @@
       - init-database.yml
       - run-check.yml
       - database-update-accept-all.yml
+      - run-check.yml
+      - database-update-accept-all.yml
 
     # The following should be supplied at run time securely
     site_key: Site key contents
