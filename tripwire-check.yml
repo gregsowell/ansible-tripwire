@@ -50,7 +50,8 @@
             to: "{{ email_to }}"
             subject: "{{ email_subject }}"
             # body: "{{ package_change.stdout_lines }}"
-            body: "{{ lookup('template', 'email_template.j2') }}"
+            # body: "{{ lookup('template', 'email_template.j2') }}"
+            body: "Tripwire violations found on hosts.  Please see attached reports."
             attach: "{{ file_paths }}"
             subtype: html
           delegate_to: localhost
