@@ -9,7 +9,7 @@
       - database-update-accept-all.yml
 
   tasks:
-    - name: Use the tripwire role to runch a check and accept all into the database
+    - name: Use the tripwire role to launch a check and accept all into the database
       include_role:
         name: tripwire
         tasks_from: "{{ item }}"
