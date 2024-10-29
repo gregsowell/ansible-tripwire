@@ -7,3 +7,7 @@
 - name: Extract the total violations
   set_fact:
     total_violations: "{{ tripwire_check.stdout.split('\n') | select('search', 'Total violations found:') | first | regex_search('Total violations found: (\\d+)', '\\1') }}"
+
+- name: Extract the file path from command output
+  set_fact:
+    report_file_path: "{{ tripwire_check.stdout.split('\n') | select('search', 'Wrote report file:') | first | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
