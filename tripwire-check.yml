@@ -1,0 +1,49 @@
+---
+- name: Check tripwire on systems and send email for violations
+  hosts: Greg-rocky9
+  gather_facts: false
+  # become: yes
+  vars:
+    email_subject: Tripwire Violations
+    email_host: relay.gregsowell.com
+    email_from: system@gregsowell.com
+    email_to: greg@gregsowell.com
+
+  tasks:
+    - name: Use the tripwire role to run a check
+      include_role:
+        name: tripwire
+      tags:
+        - check
+
+    - name: Block for when violations are found
+      when: tripwire_violations_found > 0
+      block:
+        - name: Download tripwire violation reports
+          ansible.builtin.fetch:
+            src: "{{ report_file_path[0] }}"
+            dest: "/tmp/reports/{{ inventory_hostname }}-{{ ansible_date_time.date }}.twr"
+            flat: yes
+          # delegate_to: localhost
+
+        - name: Find all files and directories in the specified path
+          ansible.builtin.find:
+            paths: "/tmp/reports"
+            recurse: no  # Set to 'yes' to include subdirectories
+          register: dir_contents
+          delegate_to: localhost
+          run_once: true
+
+        # - name: Send Email
+        #   community.general.mail:
+        #     host: "{{ email_host }}"
+        #     from: "{{ email_from }}"
+        #     port: 25
+        #     to: "{{ email_to }}"
+        #     subject: "{{ email_subject }}"
+        #     # body: "{{ package_change.stdout_lines }}"
+        #     body: "{{ lookup('template', 'email_template.j2') }}"
+        #     attach: "{{ dir_contents.files | map(attribute='path') | list }}"
+        #     subtype: html
+        #   delegate_to: localhost
+        #   run_once: true
