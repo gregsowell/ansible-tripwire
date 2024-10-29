@@ -104,7 +104,7 @@
 
     - name: Use expect to run the tripwire database --update
       ansible.builtin.expect:
-        command: tripwire --update --accept-all -r "{{ report_file_path }}"
+        command: tripwire --update --accept-all -r "{{ report_file_path[0] }}"
         responses:
           Please enter your local passphrase: "{{ local_key_password }}"
         timeout: 300
