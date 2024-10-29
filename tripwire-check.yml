@@ -13,8 +13,9 @@
     - name: Use the tripwire role to run a check
       include_role:
         name: tripwire
-      tags:
-        - check
+      apply:
+        tags:
+          - check
 
     - name: Block for when violations are found
       when: tripwire_violations_found > 0
