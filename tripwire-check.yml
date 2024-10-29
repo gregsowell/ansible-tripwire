@@ -13,7 +13,7 @@
     - name: Use the tripwire role to run a check
       include_role:
         name: tripwire
-      apply:
+      apply: #use apply to have tag inheritance
         tags:
           - check
 
