@@ -19,7 +19,7 @@
         #     - check
 
     - name: Block for when violations are found
-      when: total_violations > 0
+      when: total_violations != "0"
       block:
         - name: Download tripwire violation reports
           ansible.builtin.fetch:
