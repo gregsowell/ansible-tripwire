@@ -56,3 +56,7 @@
             subtype: html
           delegate_to: localhost
           run_once: true
+    - name: No violations found
+      when: total_violations == "0"
+      ansible.builtin.debug:
+        msg: "No violations found"
