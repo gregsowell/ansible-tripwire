@@ -5,3 +5,4 @@
     responses:
       Enter the local keyfile passphrase: "{{ local_key_password }}"
       Verify the local keyfile passphrase: "{{ local_key_password }}"
+  no_log: true

@@ -5,3 +5,4 @@
     responses:
       Enter the site keyfile passphrase: "{{ site_key_password }}"
       Verify the site keyfile passphrase: "{{ site_key_password }}"
+  no_log: true
