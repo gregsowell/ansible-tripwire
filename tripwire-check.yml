@@ -36,6 +36,13 @@
           delegate_to: localhost
           run_once: true
 
+        - name: Set a fact with the list of file paths
+          set_fact:
+            file_paths: "{{ dir_contents.files | map(attribute='path') | list }}"
+          delegate_to: localhost
+          run_once: true
+
+
         # - name: Send Email
         #   community.general.mail:
         #     host: "{{ email_host }}"
