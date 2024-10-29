@@ -20,7 +20,8 @@
 
 - name: Extract the total violations from the line
   set_fact:
-    total_violations: "{{ violations_line | regex_search('Total\\s+violations\\s+found:\\s+(\\d+)', '\\1') | int }}"
+    # total_violations: "{{ violations_line | regex_search('Total\\s+violations\\s+found:\\s+(\\d+)', '\\1') | int }}"
+    total_violations: "{{ violations_line | regex_search('\\d+') | int }}"
 
 - name: Extract the file path from command output
   set_fact:
