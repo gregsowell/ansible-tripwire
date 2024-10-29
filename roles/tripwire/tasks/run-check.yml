@@ -14,13 +14,12 @@
   set_fact:
     violations_line: "{{ tripwire_check.stdout.split('\n') | select('search', 'Total violations found:') | first }}"
 
-- name: Debug the line found
-  ansible.builtin.debug:
-    msg: "Line with total violations: {{ violations_line }}"
+# - name: Debug the line found
+#   ansible.builtin.debug:
+#     msg: "Line with total violations: {{ violations_line }}"
 
 - name: Extract the total violations from the line
   set_fact:
-    # total_violations: "{{ violations_line | regex_search('Total\\s+violations\\s+found:\\s+(\\d+)', '\\1') | int }}"
     total_violations: "{{ violations_line | regex_search('\\d+') | int }}"
 
 - name: Extract the file path from command output
