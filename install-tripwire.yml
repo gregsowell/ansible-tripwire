@@ -20,29 +20,6 @@
         name: tripwire
         state: present
 
-    # - name: Install the tripwire site key from the contents of the site_key variable
-    #   ansible.builtin.copy:
-    #     content: "{{ site_key }}"
-    #     dest: /etc/tripwire/site.key
-    #     owner: root
-    #     group: root
-    #     mode: 0600
-    #   no_log: true
-
-    # - name: Generate the local key based on hostname
-    #   # ansible.builtin.shell: /usr/sbin/tripwire --init -P local.key -L /var/lib/tripwire/$(hostname)-local.key -Q $(echo "{{ local_key_password }}" | sha256sum | awk '{print $1}')
-    #   # ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/${HOSTNAME}-local.key -Q {{ local_key_password }}"
-    #   ansible.builtin.shell: "twadmin --generate-keys -L /etc/tripwire/{{ inventory_hostname }}-local.key" # -Q {{ local_key_password }}"
-
-# Enter the local keyfile passphrase:
-# Verify the local keyfile passphrase:
-
-    # - name: Install pexpect
-    #   ansible.builtin.command: pip3 install pexpect
-    #   delegate_to: localhost
-    #   run_once: true
-    #   become: false
-
     - name: Install pexpect Python package on the remote host
       ansible.builtin.pip:
         name: pexpect
@@ -66,6 +43,13 @@
         path: /etc/tripwire/twcfg.txt
         regexp: '^MAILNOVIOLATIONS\s*=\s*true'
         line: 'MAILNOVIOLATIONS       =false'
+
+    - name: Ignore root folder ansible tmp files
+      ansible.builtin.lineinfile:
+        path: /etc/tripwire/twpol.txt
+        line: "     !/root/.ansible/tmp ;"
+        insertbefore: "^.*Catch all additions to /root"
+        state: present  # Ensures the line is only added if it doesn’t already exist
 
     - name: Use expect to generate config file
       ansible.builtin.expect:
@@ -102,20 +86,3 @@
         responses:
           Please enter your local passphrase: "{{ local_key_password }}"
         timeout: 300
-
-    # - name: Run a tripwire check 2
-    #   ansible.builtin.command: tripwire --check
-    #   register: tripwire_check
-    #   failed_when: '"Integrity check complete." not in tripwire_check.stdout'
-
-    # - name: Extract the file path from command output 2
-    #   set_fact:
-    #     # report_file_path: "{{ tripwire_check | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
-    #     report_file_path: "{{ tripwire_check.stdout.split('\n') | select('search', 'Wrote report file:') | first | regex_search('Wrote report file: (\\/.*\\.twr)', '\\1') }}"
-
-    # - name: Use expect to run the tripwire database --update 2
-    #   ansible.builtin.expect:
-    #     command: tripwire --update --accept-all -r "{{ report_file_path[0] }}"
-    #     responses:
-    #       Please enter your local passphrase: "{{ local_key_password }}"
-    #     timeout: 300
