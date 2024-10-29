@@ -24,7 +24,7 @@
         - name: Download tripwire violation reports
           ansible.builtin.fetch:
             src: "{{ report_file_path[0] }}"
-            dest: "/tmp/reports/{{ inventory_hostname }}-{{ ansible_date_time.date }}.twr"
+            dest: "/tmp/reports/{{ inventory_hostname }}.twr"
             flat: yes
           # delegate_to: localhost
 
