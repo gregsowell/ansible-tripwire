@@ -3,3 +3,7 @@
   ansible.builtin.command: tripwire --check
   register: tripwire_check
   failed_when: '"Integrity check complete." not in tripwire_check.stdout'
+
+- name: Extract the total violations
+  set_fact:
+    total_violations: "{{ tripwire_check.stdout.split('\n') | select('search', 'Total violations found:') | first | regex_search('Total violations found: (\\d+)', '\\1') }}"
