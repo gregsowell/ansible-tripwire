@@ -42,17 +42,16 @@
           delegate_to: localhost
           run_once: true
 
-
-        # - name: Send Email
-        #   community.general.mail:
-        #     host: "{{ email_host }}"
-        #     from: "{{ email_from }}"
-        #     port: 25
-        #     to: "{{ email_to }}"
-        #     subject: "{{ email_subject }}"
-        #     # body: "{{ package_change.stdout_lines }}"
-        #     body: "{{ lookup('template', 'email_template.j2') }}"
-        #     attach: "{{ dir_contents.files | map(attribute='path') | list }}"
-        #     subtype: html
-        #   delegate_to: localhost
-        #   run_once: true
+        - name: Send Email
+          community.general.mail:
+            host: "{{ email_host }}"
+            from: "{{ email_from }}"
+            port: 25
+            to: "{{ email_to }}"
+            subject: "{{ email_subject }}"
+            # body: "{{ package_change.stdout_lines }}"
+            body: "{{ lookup('template', 'email_template.j2') }}"
+            attach: "{{ file_paths }}"
+            subtype: html
+          delegate_to: localhost
+          run_once: true
