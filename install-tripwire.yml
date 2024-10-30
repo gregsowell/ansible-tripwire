@@ -5,7 +5,7 @@
   become: yes
   vars:
     # The following should be supplied at run time securely
-    site_key: Site key contents
+    # site_key: Site key contents
     site_key_password: Password for site key
     local_key_password: Password for local key
 
